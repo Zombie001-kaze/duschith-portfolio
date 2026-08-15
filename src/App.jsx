@@ -1,41 +1,67 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import heroImage from "./assets/duschith.jpg";
 
 const projects = [
   {
     number: "01",
-    name: "Password Security Toolkit",
-    type: "CYBERSECURITY TOOL",
+    name: "CyberShield-FIM",
+    category: "FILE INTEGRITY MONITOR",
     status: "ACTIVE",
-    featured: true,
     description:
-      "A Python-based password analysis toolkit that evaluates passwords using measurable security characteristics.",
+      "A Python-based security tool designed to detect unauthorized changes to protected files.",
     problem:
-      "I built this to make password security measurable instead of reducing it to a simple strong or weak label.",
-    contribution:
-      "I developed the Python analysis logic for scoring, entropy estimation, length analysis, character-set detection, strength classification, and risk assessment.",
+      "File tampering can happen silently. I built this project to provide a lightweight way to establish a trusted file state and identify unexpected modifications.",
+    built:
+      "Python monitoring logic, hashing, file-system scanning, integrity comparison, and security-focused reporting.",
     technical:
-      "The analyzer reports score, strength, risk level, entropy, password length, and individual character-set usage such as uppercase, lowercase, numbers, and special characters.",
-    stack: ["PYTHON", "ENTROPY", "SECURITY", "CLI"],
-    github:
-      "https://github.com/Zombie001-kaze/Password-Security-Toolkit",
+      "The system creates cryptographic hashes for monitored files and compares future states against the trusted baseline. A hash mismatch indicates that the file contents have changed.",
+    github: "https://github.com/Zombie001-kaze/CyberShield-FIM",
   },
   {
     number: "02",
-    name: "CyberShield-FIM",
-    type: "FILE INTEGRITY MONITOR",
+    name: "Password Security Toolkit",
+    category: "PASSWORD ANALYSIS",
     status: "ACTIVE",
     description:
-      "A Python-based security tool designed to detect unexpected modifications to protected files.",
+      "A Python security toolkit that evaluates password strength using multiple measurable characteristics.",
     problem:
-      "Important files can change without an obvious warning. I built this project to explore how file integrity monitoring can detect unauthorized modifications.",
-    contribution:
-      "I developed the Python monitoring logic for protected files and the process used to compare a trusted file state against later states.",
+      "A simple 'weak/strong' label doesn't explain why a password is risky. I built the toolkit to turn password characteristics into measurable security information.",
+    built:
+      "Python password analysis engine covering length, character sets, entropy estimation, strength scoring, and risk classification.",
     technical:
-      "The project uses a baseline-comparison approach: a trusted state is established first, then subsequent checks can identify changes to protected files.",
-    stack: ["PYTHON", "FIM", "MONITORING", "SECURITY"],
-    github:
-      "https://github.com/Zombie001-kaze/CyberShield-FIM",
+      "The analyzer evaluates password length and character diversity, then estimates entropy and combines the results into a structured security assessment rather than relying only on password length.",
+    github: "https://github.com/Zombie001-kaze",
+  },
+  {
+    number: "03",
+    name: "Kaze Cyber Toolkit",
+    category: "SECURITY TOOLKIT",
+    status: "DEVELOPMENT",
+    description:
+      "A desktop-oriented cybersecurity toolkit focused on bringing practical security utilities into one interface.",
+    problem:
+      "Security utilities are often scattered across different scripts and terminals. I wanted a single interface for experimenting with defensive and analysis-oriented tools.",
+    built:
+      "Python-based utilities with a graphical interface and modular security-tool architecture.",
+    technical:
+      "The project separates the interface from individual utilities so features can be added without rebuilding the entire application.",
+    github: "https://github.com/Zombie001-kaze",
+  },
+  {
+    number: "04",
+    name: "Jarvis Protocol",
+    category: "AI / AUTOMATION",
+    status: "EXPERIMENTAL",
+    description:
+      "An experimental Python AI assistant project exploring local automation and command-based interaction.",
+    problem:
+      "I wanted to understand how an AI assistant can interact with local tools instead of functioning only as a conversational interface.",
+    built:
+      "Python automation logic, command handling, local model integration experiments, and modular assistant functionality.",
+    technical:
+      "The architecture treats commands as executable capabilities, allowing the assistant layer to be separated from the underlying automation functions.",
+    github: "https://github.com/Zombie001-kaze",
   },
 ];
 
@@ -44,20 +70,23 @@ const skills = [
   "Cybersecurity",
   "Linux",
   "Git & GitHub",
-  "Security Tooling",
-  "File Integrity Monitoring",
-  "Password Security",
   "JavaScript",
   "React",
+  "Node.js",
   "SQL",
+  "Security Automation",
+  "File Integrity",
+  "Web Development",
+  "AI / Automation",
 ];
 
 function App() {
-  const [terminalInput, setTerminalInput] = useState("");
-  const [terminalOutput, setTerminalOutput] = useState([
-    "SECURITY LAB // OPTIONAL TERMINAL",
-    "System initialized.",
-    "Type 'help' to explore.",
+  const [command, setCommand] = useState("");
+  const [terminalLines, setTerminalLines] = useState([
+    "K R DUSCHITH SECURITY LAB v1.0",
+    "Interactive terminal initialized.",
+    "Type 'help' to see available commands.",
+    "",
   ]);
 
   useEffect(() => {
@@ -68,11 +97,12 @@ function App() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.12 }
+      {
+        threshold: 0.12,
+      }
     );
 
     elements.forEach((element) => observer.observe(element));
@@ -80,312 +110,272 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
   const runCommand = (event) => {
     event.preventDefault();
 
-    const command = terminalInput.trim().toLowerCase();
+    const input = command.trim().toLowerCase();
 
-    if (!command) return;
+    if (!input) return;
 
-    if (command === "clear") {
-      setTerminalOutput([]);
-      setTerminalInput("");
-      return;
+    let output = [];
+
+    switch (input) {
+      case "help":
+        output = [
+          "AVAILABLE COMMANDS",
+          "──────────────────",
+          "about → About Duschith",
+          "projects → View projects",
+          "skills → View technical skills",
+          "security → Run security status",
+          "contact → Contact information",
+          "clear → Clear terminal",
+        ];
+        break;
+
+      case "about":
+        output = [
+          "ABOUT",
+          "K R DUSCHITH",
+          "",
+          "Cybersecurity-focused BCA Data Science student.",
+          "Interested in security engineering, Python, Linux,",
+          "automation and practical security tooling.",
+        ];
+        break;
+
+      case "projects":
+        output = [
+          "PROJECTS",
+          "01 → CyberShield-FIM",
+          "02 → Password Security Toolkit",
+          "03 → Kaze Cyber Toolkit",
+          "04 → Jarvis Protocol",
+        ];
+        break;
+
+      case "skills":
+        output = [
+          "TECHNICAL SKILLS",
+          ...skills.map((skill) => `→ ${skill}`),
+        ];
+        break;
+
+      case "security":
+        output = [
+          "SECURITY STATUS",
+          "SYSTEM .............. OPERATIONAL",
+          "THREAT LEVEL ......... LOW",
+          "MONITORING ........... ACTIVE",
+          "SIMULATED THREATS .... 0",
+        ];
+        break;
+
+      case "contact":
+        output = [
+          "CONTACT",
+          "Email → duschith578@gmail.com",
+          "GitHub → github.com/Zombie001-kaze",
+          "LinkedIn → linkedin.com/in/k-r-duschith-68993341b/",
+        ];
+        break;
+
+      case "clear":
+        setTerminalLines([]);
+        setCommand("");
+        return;
+
+      default:
+        output = [
+          `Command not found: ${input}`,
+          "Type 'help' to see available commands.",
+        ];
     }
 
-    const commands = {
-      help: "AVAILABLE: about | projects | skills | security | contact | clear",
-
-      about:
-        "K R Duschith — BCA Data Science student focused on cybersecurity, security tooling and software development.",
-
-      projects:
-        "01 Password Security Toolkit | 02 CyberShield-FIM",
-
-      skills: skills.join(" • "),
-
-      security:
-        "STATUS: OPERATIONAL | FOCUS: DEFENSIVE SECURITY | SIMULATION: LOW",
-
-      contact: "EMAIL: duschith578@gmail.com",
-    };
-
-    const response =
-      commands[command] ||
-      `Command not found: ${command}. Type 'help'.`;
-
-    setTerminalOutput((previous) => [
+    setTerminalLines((previous) => [
       ...previous,
       `$ ${command}`,
-      response,
+      ...output,
+      "",
     ]);
 
-    setTerminalInput("");
+    setCommand("");
   };
 
   return (
-    <div className="app">
-      <div className="background-grid" />
-
-      {/* NAVBAR */}
+    <div className="site">
       <header className="navbar">
-        <button
-          className="logo"
-          onClick={() => scrollToSection("home")}
-        >
-          KR<span>_</span>DUSCHITH
-        </button>
+        <a className="logo" href="#home">
+          K R DUSCHITH<span>_</span>
+        </a>
 
         <nav>
-          <button onClick={() => scrollToSection("about")}>
-            ABOUT
-          </button>
-
-          <button onClick={() => scrollToSection("projects")}>
-            PROJECTS
-          </button>
-
-          <button onClick={() => scrollToSection("skills")}>
-            SKILLS
-          </button>
-
-          <button onClick={() => scrollToSection("security")}>
-            LAB
-          </button>
-
-          <button onClick={() => scrollToSection("contact")}>
-            CONTACT
-          </button>
+          <a href="#about">ABOUT</a>
+          <a href="#projects">PROJECTS</a>
+          <a href="#security-lab">SECURITY LAB</a>
+          <a href="#skills">SKILLS</a>
+          <a href="#contact">CONTACT</a>
         </nav>
 
         <div className="system-status">
-          <span />
-          AVAILABLE
+          <span className="status-dot"></span>
+          SYSTEM ONLINE
         </div>
       </header>
 
       <main>
         {/* HERO */}
-        <section id="home" className="section hero">
-          <div className="hero-left reveal">
+        <section className="hero section" id="home">
+          <div className="hero-content reveal">
             <div className="eyebrow">
-              <span className="green-dot" />
-              BCA DATA SCIENCE · CYBERSECURITY
-            </div>
-
-            <div className="hero-status">
-              <span>●</span>
-              AVAILABLE FOR OPPORTUNITIES
+              CYBERSECURITY / PYTHON / SOFTWARE DEVELOPMENT
             </div>
 
             <h1>
-              K R
+              BUILDING
               <br />
-              <strong>DUSCHITH</strong>
+              <span>SECURITY</span>
+              <br />
+              SYSTEMS.
             </h1>
 
-            <p className="hero-role">
-              CYBERSECURITY
-              <span>/</span>
-              PYTHON
-              <span>/</span>
-              SOFTWARE DEVELOPMENT
-            </p>
-
-            <p className="hero-description">
-              I build practical security tools and software
-              while developing deeper expertise in
-              cybersecurity, Linux, automation, and modern
+            <p className="hero-text">
+              I build practical security tools and software while developing
+              deeper expertise in cybersecurity, Linux, automation and modern
               web development.
             </p>
 
-            <div className="hero-buttons">
-              <button
-                className="primary-button"
-                onClick={() => scrollToSection("projects")}
-              >
+            <div className="hero-actions">
+              <a className="button primary" href="#projects">
                 VIEW MY WORK
-                <span>↘</span>
-              </button>
+              </a>
 
-              <button
-                className="secondary-button"
-                onClick={() => scrollToSection("contact")}
-              >
+              <a className="button secondary" href="#contact">
                 CONTACT ME
-              </button>
+              </a>
             </div>
 
-            <div className="hero-meta">
+            <div className="hero-stats">
               <div>
-                <small>FOCUS</small>
+                <span>FOCUS</span>
                 <strong>CYBERSECURITY</strong>
               </div>
 
               <div>
-                <small>PRIMARY LANGUAGE</small>
+                <span>PRIMARY LANGUAGE</span>
                 <strong>PYTHON</strong>
               </div>
 
               <div>
-                <small>PROJECTS</small>
-                <strong>02</strong>
+                <span>PROJECTS</span>
+                <strong>04+</strong>
               </div>
 
               <div>
-                <small>STATUS</small>
-                <strong className="green-text">BUILDING</strong>
+                <span>STATUS</span>
+                <strong className="green">BUILDING</strong>
               </div>
             </div>
           </div>
 
-          {/* FEATURED PROJECT */}
-          <div className="hero-featured reveal">
-            <div className="featured-top">
-              <span>FEATURED PROJECT</span>
-              <span>01</span>
-            </div>
+          <div className="hero-visual reveal">
+            <div className="image-frame">
+              <div className="image-label">
+                <span>PROFILE</span>
+                <span>01</span>
+              </div>
 
-            <div className="featured-status">
-              <span />
-              ACTIVE PROJECT
-            </div>
+              <img
+                src={heroImage}
+                alt="Duschith"
+                className="hero-image"
+              />
 
-            <h2>
-              Password
-              <br />
-              <strong>Security Toolkit</strong>
-            </h2>
-
-            <p>
-              A Python-based security analysis tool that
-              evaluates password strength through entropy,
-              length, character-set analysis, scoring, and
-              risk classification.
-            </p>
-
-            <div className="featured-tech">
-              <span>PYTHON</span>
-              <span>ENTROPY</span>
-              <span>SECURITY</span>
-              <span>CLI</span>
-            </div>
-
-            <div className="featured-detail">
-              <span>TECHNICAL FOCUS</span>
-
-              <p>
-                Converts password characteristics into
-                measurable security information instead of
-                relying on a simple strong/weak result.
-              </p>
-            </div>
-
-            <div className="featured-actions">
-              <a
-                href={projects[0].github}
-                target="_blank"
-                rel="noreferrer"
-                className="project-link-button"
-              >
-                VIEW GITHUB ↗
-              </a>
-
-              <button
-                className="featured-scroll"
-                onClick={() => scrollToSection("projects")}
-              >
-                ALL PROJECTS ↓
-              </button>
+              <div className="image-scan"></div>
             </div>
           </div>
         </section>
 
         {/* ABOUT */}
-        <section id="about" className="section content-section">
+        <section className="section about-section" id="about">
           <div className="section-heading reveal">
             <span>01</span>
             <h2>ABOUT</h2>
           </div>
 
           <div className="about-grid">
-            <div className="panel about-main reveal">
-              <div className="panel-label">PROFILE</div>
-
-              <h3>
-                Building technical depth through real
-                projects.
-              </h3>
-
-              <p>
-                I'm K R Duschith, a BCA Data Science student
-                developing practical skills across
-                cybersecurity and software development.
+            <div className="about-main reveal">
+              <p className="large-text">
+                I'm Duschith — a BCA Data Science student focused on building
+                practical cybersecurity projects rather than just collecting
+                certifications.
               </p>
 
               <p>
-                My current focus is cybersecurity:
-                understanding how systems work, building
-                security tools, working with Linux, and
-                developing projects that demonstrate actual
-                technical understanding.
+                My current focus is cybersecurity, with a particular interest
+                in Python security tooling, Linux, automation, file integrity,
+                password security and offensive-security fundamentals.
+              </p>
+
+              <p>
+                I also work with modern web technologies because security
+                engineers still need to understand how applications are built,
+                deployed and maintained.
               </p>
             </div>
 
-            <div className="about-side reveal">
-              <div className="stat-card">
-                <span>01 / FIELD</span>
+            <div className="about-panel reveal">
+              <div className="panel-row">
+                <span>LOCATION</span>
+                <strong>INDIA</strong>
+              </div>
+
+              <div className="panel-row">
+                <span>FIELD</span>
                 <strong>CYBERSECURITY</strong>
               </div>
 
-              <div className="stat-card">
-                <span>02 / DEVELOPMENT</span>
-                <strong>PYTHON · REACT</strong>
+              <div className="panel-row">
+                <span>DEGREE</span>
+                <strong>BCA / DATA SCIENCE</strong>
               </div>
 
-              <div className="stat-card">
-                <span>03 / APPROACH</span>
-                <strong>BUILD · TEST · LEARN</strong>
+              <div className="panel-row">
+                <span>BUILDING WITH</span>
+                <strong>PYTHON + JS</strong>
               </div>
             </div>
           </div>
         </section>
 
         {/* PROJECTS */}
-        <section
-          id="projects"
-          className="section content-section"
-        >
+        <section className="section projects-section" id="projects">
           <div className="section-heading reveal">
             <span>02</span>
             <h2>PROJECTS</h2>
           </div>
 
-          <div className="projects-grid">
+          <div className="projects-intro reveal">
+            <p>
+              Security projects built to understand how systems actually work,
+              not just to demonstrate a list of technologies.
+            </p>
+          </div>
+
+          <div className="projects-list">
             {projects.map((project) => (
-              <article
-                key={project.number}
-                className={`project-card ${
-                  project.featured ? "featured-project" : ""
-                } reveal`}
-              >
+              <article className="project-card reveal" key={project.number}>
                 <div className="project-top">
-                  <span>{project.number}</span>
+                  <span className="project-number">{project.number}</span>
 
-                  <span className="project-status">
-                    ● {project.status}
-                  </span>
-                </div>
-
-                <div className="project-type">
-                  {project.type}
+                  <div>
+                    <span className="project-category">
+                      {project.category}
+                    </span>
+                    <span className="project-status">
+                      ● {project.status}
+                    </span>
+                  </div>
                 </div>
 
                 <h3>{project.name}</h3>
@@ -394,220 +384,162 @@ function App() {
                   {project.description}
                 </p>
 
-                <div className="project-detail">
-                  <span>THE PROBLEM</span>
-                  <p>{project.problem}</p>
+                <div className="project-details">
+                  <div>
+                    <span>THE PROBLEM</span>
+                    <p>{project.problem}</p>
+                  </div>
+
+                  <div>
+                    <span>WHAT I BUILT</span>
+                    <p>{project.built}</p>
+                  </div>
+
+                  <div>
+                    <span>TECHNICAL DETAIL</span>
+                    <p>{project.technical}</p>
+                  </div>
                 </div>
 
-                <div className="project-detail">
-                  <span>MY CONTRIBUTION</span>
-                  <p>{project.contribution}</p>
-                </div>
-
-                <div className="project-detail">
-                  <span>TECHNICAL IMPLEMENTATION</span>
-                  <p>{project.technical}</p>
-                </div>
-
-                <div className="tech-list">
-                  {project.stack.map((tech) => (
-                    <span key={tech}>{tech}</span>
-                  ))}
-                </div>
-
-                <div className="project-actions">
+                <div className="project-footer">
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="project-link-button"
                   >
                     VIEW GITHUB ↗
                   </a>
 
-                  <span className="project-unavailable">
-                    LIVE DEMO — N/A
-                  </span>
+                  <span>PYTHON / SECURITY</span>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        {/* SKILLS */}
-        <section id="skills" className="section content-section">
+        {/* SECURITY LAB */}
+        <section className="section lab-section" id="security-lab">
           <div className="section-heading reveal">
             <span>03</span>
-            <h2>SKILLS</h2>
-          </div>
-
-          <div className="skills-layout">
-            <div className="panel skills-intro reveal">
-              <div className="panel-label">
-                TECHNICAL STACK
-              </div>
-
-              <h3>
-                Tools I use to build and understand systems.
-              </h3>
-
-              <p>
-                My strongest area is Python-based security
-                tooling. I'm expanding that foundation
-                through Linux, web development, Git, SQL,
-                and hands-on cybersecurity projects.
-              </p>
-            </div>
-
-            <div className="skills-list reveal">
-              {skills.map((skill, index) => (
-                <div className="skill-item" key={skill}>
-                  <span>
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  <strong>{skill}</strong>
-
-                  <b>↗</b>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* SECURITY LAB */}
-        <section
-          id="security"
-          className="section content-section"
-        >
-          <div className="section-heading reveal">
-            <span>04</span>
             <h2>SECURITY LAB</h2>
+
+            <div className="online-label">
+              <span className="status-dot"></span>
+              OPTIONAL
+            </div>
           </div>
 
-          <div className="security-intro reveal">
-            <span>OPTIONAL INTERACTIVE EASTER EGG</span>
-
+          <div className="lab-note reveal">
             <p>
-              Everything in this portfolio is accessible
-              without using the terminal. This is simply
-              here for visitors who want to explore.
+              This terminal is an interactive bonus. All important portfolio
+              content is available through the normal navigation.
             </p>
           </div>
 
-          <div className="security-layout">
-            <div className="interactive-terminal reveal">
+          <div className="lab-grid">
+            <div className="terminal reveal">
               <div className="terminal-header">
                 <div className="terminal-dots">
-                  <i />
-                  <i />
-                  <i />
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </div>
 
-                SECURITY-LAB
-                <span>OPTIONAL</span>
+                <span>security-lab@duschith:~</span>
               </div>
 
-              <div className="full-terminal">
-                {terminalOutput.map((line, index) => (
-                  <div
-                    key={`${line}-${index}`}
-                    className={
-                      line.startsWith("$")
-                        ? "command-line"
-                        : "output-line"
-                    }
-                  >
+              <div className="terminal-body">
+                {terminalLines.map((line, index) => (
+                  <div key={index} className="terminal-line">
                     {line}
                   </div>
                 ))}
 
-                <form
-                  className="terminal-input-line"
-                  onSubmit={runCommand}
-                >
+                <form onSubmit={runCommand} className="terminal-input">
                   <span>$</span>
 
                   <input
-                    value={terminalInput}
-                    onChange={(event) =>
-                      setTerminalInput(event.target.value)
-                    }
+                    value={command}
+                    onChange={(event) => setCommand(event.target.value)}
                     placeholder="type help..."
-                    aria-label="Security Lab terminal"
                     autoComplete="off"
+                    spellCheck="false"
                   />
                 </form>
               </div>
             </div>
 
-            <div className="security-cards">
-              <div className="security-card reveal">
-                <span>STATUS</span>
+            <div className="lab-status">
+              <div className="status-card reveal">
+                <span>SYSTEM</span>
                 <strong>OPERATIONAL</strong>
-                <p>
-                  Portfolio systems are running normally.
-                </p>
+                <p>Portfolio systems running normally.</p>
               </div>
 
-              <div className="security-card reveal">
-                <span>FOCUS</span>
-                <strong>DEFENSIVE SECURITY</strong>
-                <p>
-                  Security tooling, monitoring, analysis,
-                  and system understanding.
-                </p>
+              <div className="status-card reveal">
+                <span>SECURITY PROJECTS</span>
+                <strong>04</strong>
+                <p>Python-based security projects.</p>
               </div>
 
-              <div className="security-card reveal">
-                <span>PROJECTS</span>
+              <div className="status-card reveal">
+                <span>PRIMARY STACK</span>
                 <strong>PYTHON</strong>
-                <p>
-                  Current security work is primarily
-                  Python-based.
-                </p>
+                <p>Security tools, automation and scripting.</p>
               </div>
 
-              <div className="security-card reveal">
-                <span>SIMULATION</span>
+              <div className="status-card reveal threat">
+                <span>THREAT MONITOR</span>
                 <strong>LOW</strong>
-                <p>
-                  This interface is a portfolio feature,
-                  not a real security monitoring system.
-                </p>
+                <p>No simulated threats detected.</p>
               </div>
             </div>
           </div>
         </section>
 
+        {/* SKILLS */}
+        <section className="section skills-section" id="skills">
+          <div className="section-heading reveal">
+            <span>04</span>
+            <h2>SKILLS</h2>
+          </div>
+
+          <div className="skills-grid reveal">
+            {skills.map((skill, index) => (
+              <div className="skill-card" key={skill}>
+                <span>0{index + 1}</span>
+                <strong>{skill}</strong>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* CONTACT */}
-        <section
-          id="contact"
-          className="section content-section"
-        >
+        <section className="section contact-section" id="contact">
           <div className="section-heading reveal">
             <span>05</span>
             <h2>CONTACT</h2>
           </div>
 
-          <div className="contact-panel reveal">
-            <div>
-              <div className="panel-label">OPEN CHANNEL</div>
+          <div className="contact-grid">
+            <div className="contact-copy reveal">
+              <span className="eyebrow">OPEN TO OPPORTUNITIES</span>
 
               <h2>
-                Let's build
+                LET'S BUILD
                 <br />
-                something useful.
+                SOMETHING
+                <br />
+                <span>SECURE.</span>
               </h2>
 
               <p>
-                Interested in cybersecurity, software
-                development, projects, internships, or
-                technical collaboration? Reach out directly.
+                For internships, cybersecurity projects, collaborations or
+                technical opportunities, reach out directly.
               </p>
             </div>
 
-            <div className="contact-links">
+            <div className="contact-links reveal">
               <a href="mailto:duschith578@gmail.com">
                 <span>EMAIL</span>
                 <strong>duschith578@gmail.com</strong>
@@ -639,8 +571,9 @@ function App() {
       </main>
 
       <footer>
-        <span>© 2026 K R DUSCHITH</span>
-        <span>SECURITY LAB / PORTFOLIO</span>
+        <span>K R DUSCHITH_</span>
+        <span>CYBERSECURITY / SOFTWARE / BUILDING</span>
+        <span>© 2026</span>
       </footer>
     </div>
   );
