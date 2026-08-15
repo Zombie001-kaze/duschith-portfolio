@@ -13,55 +13,26 @@ const projects = [
     problem:
       "File tampering can happen silently. I built this project to provide a lightweight way to establish a trusted file state and identify unexpected modifications.",
     built:
-      "Python monitoring logic, hashing, file-system scanning, integrity comparison, and security-focused reporting.",
+      "Python monitoring logic, cryptographic hashing, file-system scanning, integrity comparison, and security-focused reporting.",
     technical:
-      "The system creates cryptographic hashes for monitored files and compares future states against the trusted baseline. A hash mismatch indicates that the file contents have changed.",
+      "The system creates cryptographic hashes for monitored files and compares future file states against a trusted baseline. A hash mismatch indicates that the file contents have changed.",
     github: "https://github.com/Zombie001-kaze/CyberShield-FIM",
   },
   {
     number: "02",
     name: "Password Security Toolkit",
-    category: "PASSWORD ANALYSIS",
+    category: "PASSWORD SECURITY",
     status: "ACTIVE",
     description:
-      "A Python security toolkit that evaluates password strength using multiple measurable characteristics.",
+      "A Python security toolkit that evaluates password strength using measurable security characteristics.",
     problem:
-      "A simple 'weak/strong' label doesn't explain why a password is risky. I built the toolkit to turn password characteristics into measurable security information.",
+      "A simple weak-or-strong label doesn't explain why a password is risky. I built this toolkit to turn password characteristics into a structured security assessment.",
     built:
-      "Python password analysis engine covering length, character sets, entropy estimation, strength scoring, and risk classification.",
+      "Python password analysis logic covering password length, character-set analysis, entropy estimation, strength scoring, and risk classification.",
     technical:
-      "The analyzer evaluates password length and character diversity, then estimates entropy and combines the results into a structured security assessment rather than relying only on password length.",
-    github: "https://github.com/Zombie001-kaze",
-  },
-  {
-    number: "03",
-    name: "Kaze Cyber Toolkit",
-    category: "SECURITY TOOLKIT",
-    status: "DEVELOPMENT",
-    description:
-      "A desktop-oriented cybersecurity toolkit focused on bringing practical security utilities into one interface.",
-    problem:
-      "Security utilities are often scattered across different scripts and terminals. I wanted a single interface for experimenting with defensive and analysis-oriented tools.",
-    built:
-      "Python-based utilities with a graphical interface and modular security-tool architecture.",
-    technical:
-      "The project separates the interface from individual utilities so features can be added without rebuilding the entire application.",
-    github: "https://github.com/Zombie001-kaze",
-  },
-  {
-    number: "04",
-    name: "Jarvis Protocol",
-    category: "AI / AUTOMATION",
-    status: "EXPERIMENTAL",
-    description:
-      "An experimental Python AI assistant project exploring local automation and command-based interaction.",
-    problem:
-      "I wanted to understand how an AI assistant can interact with local tools instead of functioning only as a conversational interface.",
-    built:
-      "Python automation logic, command handling, local model integration experiments, and modular assistant functionality.",
-    technical:
-      "The architecture treats commands as executable capabilities, allowing the assistant layer to be separated from the underlying automation functions.",
-    github: "https://github.com/Zombie001-kaze",
+      "The analyzer evaluates password length and character diversity, estimates entropy, and combines those factors into a structured assessment rather than relying only on password length.",
+    github:
+      "https://github.com/Zombie001-kaze/Password-Security-Toolkit",
   },
 ];
 
@@ -77,11 +48,11 @@ const skills = [
   "Security Automation",
   "File Integrity",
   "Web Development",
-  "AI / Automation",
 ];
 
 function App() {
   const [command, setCommand] = useState("");
+
   const [terminalLines, setTerminalLines] = useState([
     "K R DUSCHITH SECURITY LAB v1.0",
     "Interactive terminal initialized.",
@@ -149,8 +120,6 @@ function App() {
           "PROJECTS",
           "01 → CyberShield-FIM",
           "02 → Password Security Toolkit",
-          "03 → Kaze Cyber Toolkit",
-          "04 → Jarvis Protocol",
         ];
         break;
 
@@ -204,6 +173,8 @@ function App() {
 
   return (
     <div className="site">
+      {/* NAVBAR */}
+
       <header className="navbar">
         <a className="logo" href="#home">
           K R DUSCHITH<span>_</span>
@@ -225,6 +196,7 @@ function App() {
 
       <main>
         {/* HERO */}
+
         <section className="hero section" id="home">
           <div className="hero-content reveal">
             <div className="eyebrow">
@@ -268,7 +240,7 @@ function App() {
 
               <div>
                 <span>PROJECTS</span>
-                <strong>04+</strong>
+                <strong>02</strong>
               </div>
 
               <div>
@@ -297,6 +269,7 @@ function App() {
         </section>
 
         {/* ABOUT */}
+
         <section className="section about-section" id="about">
           <div className="section-heading reveal">
             <span>01</span>
@@ -314,13 +287,13 @@ function App() {
               <p>
                 My current focus is cybersecurity, with a particular interest
                 in Python security tooling, Linux, automation, file integrity,
-                password security and offensive-security fundamentals.
+                password security and security fundamentals.
               </p>
 
               <p>
-                I also work with modern web technologies because security
-                engineers still need to understand how applications are built,
-                deployed and maintained.
+                I also work with modern web technologies because understanding
+                how applications are built is an important part of becoming a
+                stronger security professional.
               </p>
             </div>
 
@@ -349,6 +322,7 @@ function App() {
         </section>
 
         {/* PROJECTS */}
+
         <section className="section projects-section" id="projects">
           <div className="section-heading reveal">
             <span>02</span>
@@ -364,14 +338,20 @@ function App() {
 
           <div className="projects-list">
             {projects.map((project) => (
-              <article className="project-card reveal" key={project.number}>
+              <article
+                className="project-card reveal"
+                key={project.number}
+              >
                 <div className="project-top">
-                  <span className="project-number">{project.number}</span>
+                  <span className="project-number">
+                    {project.number}
+                  </span>
 
                   <div>
                     <span className="project-category">
                       {project.category}
                     </span>
+
                     <span className="project-status">
                       ● {project.status}
                     </span>
@@ -410,7 +390,7 @@ function App() {
                     VIEW GITHUB ↗
                   </a>
 
-                  <span>PYTHON / SECURITY</span>
+                  <span>SECURITY / PYTHON</span>
                 </div>
               </article>
             ))}
@@ -418,6 +398,7 @@ function App() {
         </section>
 
         {/* SECURITY LAB */}
+
         <section className="section lab-section" id="security-lab">
           <div className="section-heading reveal">
             <span>03</span>
@@ -455,12 +436,17 @@ function App() {
                   </div>
                 ))}
 
-                <form onSubmit={runCommand} className="terminal-input">
+                <form
+                  onSubmit={runCommand}
+                  className="terminal-input"
+                >
                   <span>$</span>
 
                   <input
                     value={command}
-                    onChange={(event) => setCommand(event.target.value)}
+                    onChange={(event) =>
+                      setCommand(event.target.value)
+                    }
                     placeholder="type help..."
                     autoComplete="off"
                     spellCheck="false"
@@ -478,8 +464,8 @@ function App() {
 
               <div className="status-card reveal">
                 <span>SECURITY PROJECTS</span>
-                <strong>04</strong>
-                <p>Python-based security projects.</p>
+                <strong>02</strong>
+                <p>Verified security projects.</p>
               </div>
 
               <div className="status-card reveal">
@@ -498,6 +484,7 @@ function App() {
         </section>
 
         {/* SKILLS */}
+
         <section className="section skills-section" id="skills">
           <div className="section-heading reveal">
             <span>04</span>
@@ -507,7 +494,10 @@ function App() {
           <div className="skills-grid reveal">
             {skills.map((skill, index) => (
               <div className="skill-card" key={skill}>
-                <span>0{index + 1}</span>
+                <span>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
                 <strong>{skill}</strong>
               </div>
             ))}
@@ -515,6 +505,7 @@ function App() {
         </section>
 
         {/* CONTACT */}
+
         <section className="section contact-section" id="contact">
           <div className="section-heading reveal">
             <span>05</span>
@@ -523,7 +514,9 @@ function App() {
 
           <div className="contact-grid">
             <div className="contact-copy reveal">
-              <span className="eyebrow">OPEN TO OPPORTUNITIES</span>
+              <span className="eyebrow">
+                OPEN TO OPPORTUNITIES
+              </span>
 
               <h2>
                 LET'S BUILD
